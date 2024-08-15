@@ -72,12 +72,12 @@ variable "instance_type" {  # this variable will help u spcifile which instance_
 
 
   resource "aws_iam_user" "n1" {
-    for_each = var.usernames
+    for_each =toset(var.usernames)
     name = each.key
   }
 
 resource "aws_instance" "sv1" {
-  for_each = var.instance_type
+  for_each = toset(var.instance_type)
   ami = data.aws_ami.amazon_linux_2.id   # if the ami are to be diffn on the 3 instance we want to create then we can declear a variable for 
                                          # the ami and call it in the resource block same way we did for user, instance-type and group
 instance_type = each.key
